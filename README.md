@@ -13,8 +13,7 @@ Useful references used when working on this project
 # Setup / Run
 ```
 bundle install
-bundle exec rspec
-bundle exec rubocop
+bundle exec rake
 ```
 
 ```

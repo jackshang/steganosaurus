@@ -1,11 +1,4 @@
 require 'rubygems'
-require 'rmagick'
-require './lib/bitmap'
-
-# Magick::Image.read('monkey_original.jpg')[0].each_pixel do |pixel, col, row|
-#   puts "Pixel at: #{col}x#{row}:
-#   \tR: #{pixel.red}, G: #{pixel.green}, B: #{pixel.blue}"
-# end
 
 input_array = ARGV
 

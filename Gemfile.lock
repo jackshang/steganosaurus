@@ -9,7 +9,7 @@ GEM
       ast (~> 2.4.0)
     psych (3.1.0)
     rainbow (3.0.0)
-    rmagick (3.0.0)
+    rake (12.3.2)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -38,7 +38,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rmagick (~> 3.0.0)
+  rake (~> 12.3.2)
   rspec (~> 3.8.0)
   rubocop (~> 0.66.0)
 

@@ -36,5 +36,12 @@ class Bitmap
     file = File.open(filename, 'rb')
     puts "File size: #{file.size}"
     raise 'File size is too small' if file.size < 54
+
+    # Populate file_header
+    binary = file.read(14)
+    @file_header = binary.unpack('A2 L S S L')
+    # Populate image header
+    binary = file.read(40)
+    @image_header = binary.unpack('L L L S S L L L L L L')
   end
 end
