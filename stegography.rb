@@ -1,4 +1,5 @@
 require 'rubygems'
+require './lib/image'
 
 input_array = ARGV
 
@@ -19,3 +20,7 @@ else
   puts 'Unrecognised encode/decode flag, exiting...'
   exit
 end
+
+image = Image.open(image_filename)
+image.transform_image('Test message')
+image.save_image
