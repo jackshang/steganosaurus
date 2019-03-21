@@ -22,7 +22,8 @@ ImageHeader = Struct.new(
   :biClrImportant
 )
 
-# Class to handle a bitmap file
+# Class to handle a bitmap file, currently only supports Windows
+# Bitmap Header (BM)
 class Bitmap
   attr_reader :file_header
   attr_reader :image_header
