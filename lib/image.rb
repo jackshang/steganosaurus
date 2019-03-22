@@ -1,3 +1,5 @@
+require_relative 'bitmap'
+
 # Factory class
 class Image
   def self.open(filename)

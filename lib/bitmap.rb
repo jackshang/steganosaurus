@@ -1,3 +1,5 @@
+require_relative 'transform'
+
 # Class to handle a bitmap file, currently only supports Windows
 # Bitmap Header (BM)
 #
@@ -70,7 +72,7 @@ class Bitmap
   end
 
   def save_image
-    orig_file = File.open(filename, 'rb')
+    orig_file = File.open(@filename, 'rb')
     new_file = File.open('modified-'.concat(@filename), 'wb')
     new_file.write(orig_file.read(@file_header.offbits))
     new_file.write(orig_file.read(@image_header.size_image))
