@@ -44,16 +44,16 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  # # Supress stdout / stderr output
-  # original_stderr = $stderr
-  # original_stdout = $stdout
-  # config.before(:all) do
-  #   # Redirect stderr and stdout
-  #   $stderr = File.open(File::NULL, 'w')
-  #   $stdout = File.open(File::NULL, 'w')
-  # end
-  # config.after(:all) do
-  #   $stderr = original_stderr
-  #   $stdout = original_stdout
-  # end
+  # Supress stdout / stderr output
+  original_stderr = $stderr
+  original_stdout = $stdout
+  config.before(:all) do
+    # Redirect stderr and stdout
+    $stderr = File.open(File::NULL, 'w')
+    $stdout = File.open(File::NULL, 'w')
+  end
+  config.after(:all) do
+    $stderr = original_stderr
+    $stdout = original_stdout
+  end
 end

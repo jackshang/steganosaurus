@@ -63,12 +63,12 @@ RSpec.describe Bitmap do
       # rubocop:enable Metrics/LineLength
     end
 
-    it 'Should update data when transform_image is called' do
-      allow(Transform).to receive(:transform_image).with(
-        'a message', anything
+    it 'Should update data when encode_message is called' do
+      allow(Transform).to receive(:encode_message).with(
+        'a message'.unpack('B*')[0], anything, anything
       ).and_return('1111111100000000')
       image = Bitmap.new('monkey.bmp')
-      image.transform_image('a message')
+      image.encode_message('a message')
       expect(image.pixel_data).to eq('1111111100000000')
     end
   end

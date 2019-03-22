@@ -67,15 +67,24 @@ class Bitmap
     @image_header = ImageHeader.new(*data)
   end
 
-  def transform_image(message)
-    @pixel_data = Transform.transform_image(message, @pixel_data)
+  def encode_message(message)
+    # puts 'In encode_message'
+    @pixel_data = Transform.encode_message(
+      message.unpack('B*')[0], @pixel_data, @image_header.bit_count
+    )
+  end
+
+  def decode_message
+    # puts 'In decode_message'
+    @pixel_data = Transform.decode_message(@pixel_data, @image_header.bit_count)
   end
 
   def save_image
     orig_file = File.open(@filename, 'rb')
     new_file = File.open('modified-'.concat(@filename), 'wb')
+    # Write original file up to pixel data
     new_file.write(orig_file.read(@file_header.offbits))
-    new_file.write(orig_file.read(@image_header.size_image))
+    new_file.write([@pixel_data].pack('B*'))
     new_file.close
   end
 end

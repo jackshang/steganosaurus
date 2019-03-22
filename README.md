@@ -2,6 +2,9 @@
 This is a small application written as a steganography exercise.
 Nothing fancy, just a bit of fun.
 
+Currently supports:
+* BMP (BM header only)
+
 # Refernce Links
 Useful references used when working on this project
 
@@ -16,7 +19,18 @@ bundle install
 bundle exec rake
 ```
 
+## Encode a message
 ```
-ruby stegography.rb monkey.bmp d
-ruby stegography.rb monkey.bmp e "This is a secret message"
+ruby stegography.rb 10x10.bmp e "Super secret!"
 ```
+
+## Decode a message
+```
+ruby stegography.rb modified-10x10.bmp d
+```
+
+# Example
+## Original
+![Original](10x10.bmp)
+## Modified
+![Modified](modified-10x10.bmp)

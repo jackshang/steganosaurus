@@ -8,11 +8,11 @@ RSpec.describe Transform do
     end
 
     it 'Should return false when image is not big enough' do
-      expect(Transform.image_big_enough?(@message, @pixel_data)).to eq false
+      expect(Transform.image_big_enough?(@message, @pixel_data, 8)).to eq false
     end
 
     it 'Should throw an error when transorming the image' do
-      expect { Transform.transform_image(@message, @pixel_data) }.to raise_error(
+      expect { Transform.encode_message(@message, @pixel_data, 8) }.to raise_error(
         'Image not big enough to transform'
       )
     end
@@ -25,7 +25,7 @@ RSpec.describe Transform do
     end
 
     it 'Should return true when image is big enough' do
-      expect(Transform.image_big_enough?(@message, @pixel_data)).to eq true
+      expect(Transform.image_big_enough?(@message, @pixel_data, 8)).to eq true
     end
 
     it 'Should transform the image' do
@@ -40,7 +40,7 @@ RSpec.describe Transform do
       # 00011110
       # 00101000
       # So replacing last to bits of each image byte is:
-      transformed_pixel_data = Transform.transform_image(@message, @pixel_data)
+      transformed_pixel_data = Transform.encode_message(@message, @pixel_data, 8)
       # puts transformed_pixel_data
       data_as_bytes = transformed_pixel_data.scan(/.{8}/)
       # Modified blocks
@@ -53,6 +53,18 @@ RSpec.describe Transform do
       expect(data_as_bytes[5]).to eq('00010100')
       expect(data_as_bytes[6]).to eq('00011110')
       expect(data_as_bytes[7]).to eq('00101000')
+    end
+  end
+
+  context 'When decoding from pixel data' do
+    before do
+      # Note this is the decimal values of the above encoded message 'A'
+      @pixel_data = [9, 20, 28, 41].pack('C*').unpack('B*')[0]
+    end
+
+    it 'Should return string containing the encoded message' do
+      decoded_message = Transform.decode_message(@pixel_data, 8)
+      expect(decoded_message).to eq('A')
     end
   end
 end
