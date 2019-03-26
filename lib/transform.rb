@@ -22,7 +22,9 @@ class Transform
     message_items = message.scan(/.{2}/)
     pixels = pixel_data.scan(/.{#{bits_per_pixel}}/)
     message_items.size.times do |i|
+      # Replace last two bits with two bits of message
       transformed_pixel = pixels[i].gsub(/\d{2}$/, message_items[i])
+      # Add to new pixel data string
       transformed_pixel_data.concat(transformed_pixel)
     end
     # Now fill in the rest of the original pxel data

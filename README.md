@@ -23,10 +23,18 @@ bundle exec rake
 ```
 ruby stegography.rb 10x10.bmp e "Super secret!"
 ```
+## Encode a message from file
+```
+ruby stegography.rb 10x10.bmp e "${cat test.txt}"
+```
 
 ## Decode a message
 ```
 ruby stegography.rb modified-10x10.bmp d
+
+Image file name: modified-10x10.bmp
+Decoding Message...
+Super secret�.�������;�����
 ```
 
 # Example
