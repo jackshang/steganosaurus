@@ -26,7 +26,7 @@ class Transform
       transformed_pixel_data.concat(transformed_pixel)
     end
     # Now fill in the rest of the original pxel data
-    offset = 8 * (message.size / 2)
+    offset = bits_per_pixel * (message.size / 2)
     transformed_pixel_data.concat(pixel_data[offset..-1])
   end
 
