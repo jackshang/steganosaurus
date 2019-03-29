@@ -12,6 +12,7 @@ Useful references used when working on this project
 * [BMP File Format](https://en.wikipedia.org/wiki/BMP_file_format)
 * [Working with Binary Files Example](https://www.visuality.pl/posts/cs-lessons-001-working-with-binary-files)
 * [rspec expect vs expect block](https://stackoverflow.com/questions/19960831/rspec-expect-vs-expect-with-block-whats-the-difference) Hadn't come across this before strangely!
+* [jpeg file format](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format)
 
 # Setup / Run
 ```

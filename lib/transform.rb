@@ -7,6 +7,9 @@ class Transform
   def self.image_big_enough?(message, pixel_data, bits_per_pixel)
     number_of_required_pixels = message.size / 2
     number_of_pixels = pixel_data.size / bits_per_pixel
+    # puts "number_of_required_pixels #{number_of_required_pixels}"
+    # puts "number_of_pixels #{number_of_pixels}"
+    # puts "pixel_data.size #{pixel_data.size}"
     number_of_pixels > number_of_required_pixels
   end
 

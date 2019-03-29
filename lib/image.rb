@@ -1,4 +1,5 @@
 require_relative 'bitmap'
+require_relative 'jpeg'
 
 # Factory class
 class Image
@@ -6,6 +7,8 @@ class Image
     case File.extname(filename)
     when '.bmp'
       Bitmap.new(filename)
+    when '.jpg'
+      Jpeg.new(filename)
     else
       raise 'Unsupported file type'
     end

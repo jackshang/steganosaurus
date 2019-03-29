@@ -10,5 +10,10 @@ RSpec.describe Image do
       allow_any_instance_of(Bitmap).to receive(:load_file).with('test.bmp')
       expect(Image.open('test.bmp')).to be_instance_of(Bitmap)
     end
+
+    it 'Should return a Jpeg object when jpeg filename is used' do
+      allow_any_instance_of(Jpeg).to receive(:load_file).with('test.jpg')
+      expect(Image.open('test.jpg')).to be_instance_of(Jpeg)
+    end
   end
 end
