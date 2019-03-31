@@ -8,10 +8,12 @@ require_relative 'transform'
 class Jpeg
   SOS_HEX_MARKER = 'ffda'.freeze
   EOI_HEX_MARKER = 'ffd9'.freeze
-  attr_reader :sos_loc, :hex_pixel_data, :pixel_data, :image_headers
+  attr_reader :hex_pixel_data, :pixel_data, :image_headers, :pixel_data_scan_breaks
 
   def initialize(filename)
     @filename = filename
+    @pixel_data_scan_breaks = []
+    @hex_pixel_data = ''
     load_file(filename)
   end
 
@@ -21,18 +23,46 @@ class Jpeg
     # Get image data between Start of Scan (ffda) and End of Image (ffd9) markers
     binary = file.read(file.size)
     data = binary.unpack('H*')[0]
-    @sos_loc = data.index(SOS_HEX_MARKER)
+    # populate image header
+    populate_image_header(data)
+    # populate scans
+    populate_scans(data)
     # End of Image is 4 bytes from end of data
-    eoi = data.size - 4
-    @image_headers = data[0..@sos_loc - 1]
-    puts "Image Headers: #{@image_headers}"
-    # actually want 4 bytes after SOS as beginging of data
-    @hex_pixel_data = data[@sos_loc + 4...eoi]
-    @pixel_data = [@hex_pixel_data].pack('H*').unpack('B*')[0]
+    # eoi = data.size - 4
+    # # actually want 4 bytes after SOS as beginging of data
+    # @hex_pixel_data = data[@sos_loc + 4...eoi]
+    # @pixel_data = [@hex_pixel_data].pack('H*').unpack('B*')[0]
+  end
+
+  def populate_image_header(data)
+    sos_loc = data.index(SOS_HEX_MARKER)
+    @image_headers = data[0..sos_loc - 1]
+  end
+
+  def populate_scans(data)
+    # jpeg can be baseline or progressive: https://en.wikipedia.org/wiki/JPEG
+    # so potentially can have multiple scans, find all and put into array
+    # scan starts with SOS_HEX_MARKER
+    sos_loc = 0
+    until sos_loc.nil?
+      next_sos_loc = data.index(SOS_HEX_MARKER, sos_loc + 1)
+      if sos_loc > 0
+        scan_data = ''
+        scan_data += if next_sos_loc.nil?
+                       data[(sos_loc + 4)...(data.size - 4)]
+                     else
+                       data[(sos_loc + 4)...next_sos_loc]
+                     end
+        @hex_pixel_data += scan_data
+        @pixel_data_scan_breaks.push(scan_data.length)
+      end
+      sos_loc = next_sos_loc
+    end
   end
 
   def encode_message(message)
     # puts 'In encode_message'
+    @pixel_data = [@hex_pixel_data].pack('H*').unpack('B*')[0]
     @pixel_data = Transform.encode_message(
       message.unpack('B*')[0], @pixel_data, 8
     )
